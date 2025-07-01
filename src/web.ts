@@ -7,4 +7,8 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
     console.log('ECHO', options);
     return options;
   }
+
+  async logout(): Promise<void> {
+    console.log('logout in web isnt really needed it already works')
+  }
 }
