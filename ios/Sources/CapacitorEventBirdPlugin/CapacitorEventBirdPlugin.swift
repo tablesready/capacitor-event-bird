@@ -20,13 +20,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func logout(_ call: CAPPluginCall) {
-        DispatchQueue.main.async {
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                appDelegate.showLoginScreen()
-                call.resolve()
-            } else {
-                call.reject("Unable to access AppDelegate")
-            }
-        }
+      NotificationCenter.default.post(name: Notification.Name("NativeLogoutEvent"), object: nil)
+      call.resolve()
     }
 }

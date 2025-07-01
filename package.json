@@ -1,6 +1,6 @@
 {
   "name": "capacitor-event-bird",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "returns events back to native env",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
