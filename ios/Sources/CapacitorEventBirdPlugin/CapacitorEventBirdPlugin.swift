@@ -21,15 +21,11 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
 
     @objc func logout(_ call: CAPPluginCall) {
         DispatchQueue.main.async {
-            if let sceneDelegate = UIApplication.shared.connectedScenes
-                .first?.delegate as? SceneDelegate {
-                sceneDelegate.showLoginScreen()
-                call.resolve()
-            } else if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                 appDelegate.showLoginScreen()
                 call.resolve()
             } else {
-                call.reject("Unable to access root view controller")
+                call.reject("Unable to access AppDelegate")
             }
         }
     }
