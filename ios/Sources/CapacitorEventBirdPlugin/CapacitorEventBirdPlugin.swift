@@ -5,9 +5,15 @@ import Capacitor
 public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "CapacitorEventBirdPlugin"
     public let jsName = "CapacitorEventBird"
+
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise)
+    ]
+
+    // Register the supported events
+    public let pluginEvents: [CAPPluginEvent] = [
+        CAPPluginEvent(name: "authTokenReceived", returnType: CAPPluginReturnCallback)
     ]
 
     private let implementation = CapacitorEventBird()
@@ -20,7 +26,17 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func logout(_ call: CAPPluginCall) {
-      NotificationCenter.default.post(name: Notification.Name("NativeLogoutEvent"), object: nil)
-      call.resolve()
+        NotificationCenter.default.post(name: Notification.Name("NativeLogoutEvent"), object: nil)
+        call.resolve()
+    }
+
+    // Call this from AppDelegate or native to emit the token to JS
+    @objc public func sendAuthTokenToJS(_ token: String) {
+        let json = "{ \"token\": \"\(token)\" }"
+        bridge?.triggerJSEvent(
+            eventName: "authTokenReceived",
+            target: "window",
+            data: json
+        )
     }
 }
