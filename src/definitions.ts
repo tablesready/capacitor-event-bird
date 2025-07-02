@@ -4,6 +4,7 @@ export interface AuthTokenReceivedData {
 
 export interface CapacitorEventBirdPlugin {
   echo(options: { value: string }): Promise<{ value: string }>;
+  notifyNativeReady(): Promise<void>;
   logout(): Promise<void>;
   addListener(
     eventName: 'authTokenReceived',

@@ -8,12 +8,8 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
 
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise)
-    ]
-
-    // Register the supported events
-    public let pluginEvents: [CAPPluginEvent] = [
-        CAPPluginEvent(name: "authTokenReceived", returnType: CAPPluginReturnCallback)
+        CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "notifyNativeReady", returnType: CAPPluginReturnPromise),
     ]
 
     private let implementation = CapacitorEventBird()
@@ -38,5 +34,17 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
             target: "window",
             data: json
         )
+    }
+
+    @objc func notifyNativeReady(_ call: CAPPluginCall) {
+        print("[Native] JS signaled ready")
+
+        // If we already have a token pending, send it now
+        if let token = AppDelegate.shared?.pendingToken {
+            sendAuthTokenToJS(token)
+            AppDelegate.shared?.pendingToken = nil
+        }
+
+        call.resolve()
     }
 }

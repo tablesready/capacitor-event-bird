@@ -15,6 +15,8 @@ npx cap sync
 
 * [`echo(...)`](#echo)
 * [`logout()`](#logout)
+* [`addListener('authTokenReceived', ...)`](#addlistenerauthtokenreceived-)
+* [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -43,5 +45,31 @@ logout() => Promise<void>
 ```
 
 --------------------
+
+
+### addListener('authTokenReceived', ...)
+
+```typescript
+addListener(eventName: 'authTokenReceived', listenerFunc: (data: AuthTokenReceivedData) => void) => Promise<{ remove: () => void; }>
+```
+
+| Param              | Type                                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------ |
+| **`eventName`**    | <code>'authTokenReceived'</code>                                                           |
+| **`listenerFunc`** | <code>(data: <a href="#authtokenreceiveddata">AuthTokenReceivedData</a>) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;{ remove: () =&gt; void; }&gt;</code>
+
+--------------------
+
+
+### Interfaces
+
+
+#### AuthTokenReceivedData
+
+| Prop        | Type                |
+| ----------- | ------------------- |
+| **`token`** | <code>string</code> |
 
 </docgen-api>
