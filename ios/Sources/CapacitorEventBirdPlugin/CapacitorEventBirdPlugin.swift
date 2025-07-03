@@ -9,42 +9,35 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "notifyNativeReady", returnType: CAPPluginReturnPromise),
     ]
 
+    private var pendingEchoCalls: [CAPPluginCall] = []
+    private var savedToken: String?
     private let implementation = CapacitorEventBird()
 
     @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.resolve([
-            "value": implementation.echo(value)
-        ])
+        if let token = savedToken {
+            call.resolve(["value": token])
+        } else {
+            print("[Native] JS called echo, but token not ready. Queuing callback.")
+            pendingEchoCalls.append(call)
+        }
+    }
+
+    // Called by native code to store the token
+    @objc public func setAuthToken(_ token: String) {
+        print("[Native] Setting auth token in plugin")
+        self.savedToken = token
+
+        // Resolve all pending echo calls
+        for call in pendingEchoCalls {
+            call.resolve(["value": token])
+        }
+        pendingEchoCalls.removeAll()
     }
 
     @objc func logout(_ call: CAPPluginCall) {
         NotificationCenter.default.post(name: Notification.Name("NativeLogoutEvent"), object: nil)
-        call.resolve()
-    }
-
-    // Call this from AppDelegate or native to emit the token to JS
-    @objc public func sendAuthTokenToJS(_ token: String) {
-        let json = "{ \"token\": \"\(token)\" }"
-        bridge?.triggerJSEvent(
-            eventName: "authTokenReceived",
-            target: "window",
-            data: json
-        )
-    }
-
-    @objc func notifyNativeReady(_ call: CAPPluginCall) {
-        print("[Native] JS signaled ready")
-
-        // If we already have a token pending, send it now
-        if let token = AppDelegate.shared?.pendingToken {
-            sendAuthTokenToJS(token)
-            AppDelegate.shared?.pendingToken = nil
-        }
-
         call.resolve()
     }
 }
