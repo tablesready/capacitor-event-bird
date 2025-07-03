@@ -24,7 +24,6 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         }
     }
 
-    // Called by native code to store the token
     @objc public func setAuthToken(_ token: String) {
         print("[Native] Setting auth token in plugin")
         self.savedToken = token
@@ -34,6 +33,11 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
             call.resolve(["value": token])
         }
         pendingEchoCalls.removeAll()
+    }
+
+    @objc public func removeAuthToken() {
+        print("[Native] Removing auth token in plugin")
+        self.savedToken = nil
     }
 
     @objc func logout(_ call: CAPPluginCall) {
