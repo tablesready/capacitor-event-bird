@@ -17,6 +17,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
 
     @objc func echo(_ call: CAPPluginCall) {
         if let token = savedToken {
+            print("[Native] JS called echo, passing the token.")
             call.resolve(["value": token])
         } else {
             print("[Native] JS called echo, but token not ready. Queuing callback.")
@@ -35,13 +36,10 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         pendingEchoCalls.removeAll()
     }
 
-    @objc public func removeAuthToken() {
-        print("[Native] Removing auth token in plugin")
-        self.savedToken = nil
-    }
-
     @objc func logout(_ call: CAPPluginCall) {
         NotificationCenter.default.post(name: Notification.Name("NativeLogoutEvent"), object: nil)
+        savedToken = nil
+        pendingEchoCalls.removeAll()
         call.resolve()
     }
 }
