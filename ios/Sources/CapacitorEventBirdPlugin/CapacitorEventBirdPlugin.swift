@@ -9,6 +9,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "waitlistAfterInit", returnType: CAPPluginReturnPromise),
     ]
 
     private var pendingEchoCalls: [CAPPluginCall] = []
@@ -40,6 +41,11 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         NotificationCenter.default.post(name: Notification.Name("NativeLogoutEvent"), object: nil)
         savedToken = nil
         pendingEchoCalls.removeAll()
+        call.resolve()
+    }
+
+    @objc func waitlistAfterInit(_ call: CAPPluginCall) {
+        NotificationCenter.default.post(name: Notification.Name("WaitlistAfterInit"), object: nil)
         call.resolve()
     }
 }
