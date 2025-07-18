@@ -15,6 +15,7 @@ npx cap sync
 
 * [`echo(...)`](#echo)
 * [`logout()`](#logout)
+* [`waitlistAfterInit()`](#waitlistafterinit)
 
 </docgen-index>
 
@@ -40,6 +41,15 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 
 ```typescript
 logout() => Promise<void>
+```
+
+--------------------
+
+
+### waitlistAfterInit()
+
+```typescript
+waitlistAfterInit() => Promise<void>
 ```
 
 --------------------

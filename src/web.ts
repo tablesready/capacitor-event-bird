@@ -11,4 +11,8 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
   async logout(): Promise<void> {
     console.log('logout in web isnt really needed it already works');
   }
+
+  async waitlistAfterInit(): Promise<void> {
+    console.log('waitlistAfterInit in web isnt really needed it already works');
+  }
 }
