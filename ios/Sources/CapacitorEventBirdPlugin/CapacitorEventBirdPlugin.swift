@@ -10,6 +10,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "waitlistAfterInit", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "openHelpModal", returnType: CAPPluginReturnPromise),
     ]
 
     private var pendingEchoCalls: [CAPPluginCall] = []
@@ -41,6 +42,11 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         NotificationCenter.default.post(name: Notification.Name("NativeLogoutEvent"), object: nil)
         savedToken = nil
         pendingEchoCalls.removeAll()
+        call.resolve()
+    }
+
+    @objc func openHelpModal(_ call: CAPPluginCall) {
+        NotificationCenter.default.post(name: Notification.Name("HelpBeaconOpenEvent"), object: nil)
         call.resolve()
     }
 

@@ -16,6 +16,7 @@ npx cap sync
 * [`echo(...)`](#echo)
 * [`logout()`](#logout)
 * [`waitlistAfterInit()`](#waitlistafterinit)
+* [`openHelpModal()`](#openhelpmodal)
 
 </docgen-index>
 
@@ -50,6 +51,15 @@ logout() => Promise<void>
 
 ```typescript
 waitlistAfterInit() => Promise<void>
+```
+
+--------------------
+
+
+### openHelpModal()
+
+```typescript
+openHelpModal() => Promise<void>
 ```
 
 --------------------
