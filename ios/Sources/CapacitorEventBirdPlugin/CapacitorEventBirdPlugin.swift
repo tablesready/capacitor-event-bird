@@ -11,6 +11,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "waitlistAfterInit", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "openHelpModal", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getDeviceId", returnType: CAPPluginReturnPromise),
     ]
 
     private var pendingEchoCalls: [CAPPluginCall] = []
@@ -25,6 +26,11 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
             print("[Native] JS called echo, but token not ready. Queuing callback.")
             pendingEchoCalls.append(call)
         }
+    }
+
+    @objc func getDeviceId(_ call: CAPPluginCall) {
+        call.resolve(["value": UIDevice.current.identifierForVendor?.uuidString])
+        return
     }
 
     @objc public func setAuthToken(_ token: String) {

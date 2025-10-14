@@ -3,4 +3,5 @@ export interface CapacitorEventBirdPlugin {
   logout(): Promise<void>;
   waitlistAfterInit(): Promise<void>
   openHelpModal(): Promise<void>
+  getDeviceId(): Promise<{ value: string }>;
 }

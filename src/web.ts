@@ -19,4 +19,8 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
   async waitlistAfterInit(): Promise<void> {
     console.log('waitlistAfterInit in web isnt really needed it already works');
   }
+
+  async getDeviceId(): Promise<{ value: string }> {
+    return { value: 'ios device id is not needed for web' };
+  }
 }
