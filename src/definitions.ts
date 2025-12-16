@@ -4,4 +4,5 @@ export interface CapacitorEventBirdPlugin {
   waitlistAfterInit(): Promise<void>
   openHelpModal(): Promise<void>
   getDeviceId(): Promise<{ value: string }>;
+  getFCMToken(options: { value: string }): Promise<{ value: string }>;
 }

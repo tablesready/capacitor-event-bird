@@ -8,6 +8,11 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
     return options;
   }
 
+  async getFCMToken(options: { value: string }): Promise<{ value: string }> {
+    console.log('getFCMToken', options);
+    return options;
+  }
+
   async logout(): Promise<void> {
     console.log('logout in web isnt really needed it already works');
   }
