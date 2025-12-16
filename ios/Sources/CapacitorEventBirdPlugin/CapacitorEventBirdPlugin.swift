@@ -8,6 +8,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
 
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getFCMToken", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "waitlistAfterInit", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "openHelpModal", returnType: CAPPluginReturnPromise),
@@ -15,7 +16,11 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     ]
 
     private var pendingEchoCalls: [CAPPluginCall] = []
+    private var pendingFCMCalls: [CAPPluginCall] = []
+
     private var savedToken: String?
+    private var savedFCMToken: String?
+
     private let implementation = CapacitorEventBird()
 
     @objc func echo(_ call: CAPPluginCall) {
@@ -28,16 +33,35 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         }
     }
 
+    @objc func getFCMToken(_ call: CAPPluginCall) {
+        if let token = savedFCMToken {
+            print("[Native] JS called getFCMToken, passing the token.")
+            call.resolve(["value": token])
+        } else {
+            print("[Native] JS called getFCMToken, but token not ready. Queuing callback.")
+            pendingFCMCalls.append(call)
+        }
+    }
+
     @objc func getDeviceId(_ call: CAPPluginCall) {
         call.resolve(["value": UIDevice.current.identifierForVendor?.uuidString])
         return
+    }
+
+    @objc public func setFCMToken(_ token: String) {
+        print("[Native] Setting FCM token in plugin")
+        self.savedFCMToken = token
+
+        for call in pendingFCMCalls {
+            call.resolve(["value": token])
+        }
+        pendingFCMCalls.removeAll()
     }
 
     @objc public func setAuthToken(_ token: String) {
         print("[Native] Setting auth token in plugin")
         self.savedToken = token
 
-        // Resolve all pending echo calls
         for call in pendingEchoCalls {
             call.resolve(["value": token])
         }

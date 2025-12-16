@@ -17,6 +17,7 @@ npx cap sync
 * [`logout()`](#logout)
 * [`waitlistAfterInit()`](#waitlistafterinit)
 * [`openHelpModal()`](#openhelpmodal)
+* [`getDeviceId()`](#getdeviceid)
 
 </docgen-index>
 
@@ -61,6 +62,17 @@ waitlistAfterInit() => Promise<void>
 ```typescript
 openHelpModal() => Promise<void>
 ```
+
+--------------------
+
+
+### getDeviceId()
+
+```typescript
+getDeviceId() => Promise<{ value: string; }>
+```
+
+**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
 
 --------------------
 
