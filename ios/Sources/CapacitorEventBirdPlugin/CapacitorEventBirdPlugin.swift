@@ -10,6 +10,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "getFCMToken", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "logout", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "signupWithGoogle", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "waitlistAfterInit", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "openHelpModal", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "getDeviceId", returnType: CAPPluginReturnPromise),
@@ -72,6 +73,11 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         NotificationCenter.default.post(name: Notification.Name("NativeLogoutEvent"), object: nil)
         savedToken = nil
         pendingEchoCalls.removeAll()
+        call.resolve()
+    }
+
+    @objc func signupWithGoogle(_ call: CAPPluginCall) {
+        NotificationCenter.default.post(name: Notification.Name("CapacitorSignupWithGoogle"), object: nil)
         call.resolve()
     }
 

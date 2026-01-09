@@ -18,6 +18,7 @@ npx cap sync
 * [`waitlistAfterInit()`](#waitlistafterinit)
 * [`openHelpModal()`](#openhelpmodal)
 * [`getDeviceId()`](#getdeviceid)
+* [`getFCMToken(...)`](#getfcmtoken)
 
 </docgen-index>
 
@@ -71,6 +72,21 @@ openHelpModal() => Promise<void>
 ```typescript
 getDeviceId() => Promise<{ value: string; }>
 ```
+
+**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+
+--------------------
+
+
+### getFCMToken(...)
+
+```typescript
+getFCMToken(options: { value: string; }) => Promise<{ value: string; }>
+```
+
+| Param         | Type                            |
+| ------------- | ------------------------------- |
+| **`options`** | <code>{ value: string; }</code> |
 
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
 

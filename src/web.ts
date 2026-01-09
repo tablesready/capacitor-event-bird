@@ -17,6 +17,10 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
     console.log('logout in web isnt really needed it already works');
   }
 
+  async signupWithGoogle(): Promise<void> {
+    console.log('signupWithGoogle in web isnt really needed it already works');
+  }
+
   async openHelpModal(): Promise<void> {
     console.log('openHelpModal in web isnt really needed it already works');
   }
