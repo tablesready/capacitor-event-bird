@@ -14,6 +14,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "waitlistAfterInit", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "openHelpModal", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "getDeviceId", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getGoogleData", returnType: CAPPluginReturnPromise),
     ]
 
     private var pendingEchoCalls: [CAPPluginCall] = []
@@ -21,6 +22,9 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
 
     private var savedToken: String?
     private var savedFCMToken: String?
+
+    private var savedGoogleDisplayName: String?
+    private var savedGoogleEmail: String?
 
     private let implementation = CapacitorEventBird()
 
@@ -47,6 +51,17 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     @objc func getDeviceId(_ call: CAPPluginCall) {
         call.resolve(["value": UIDevice.current.identifierForVendor?.uuidString])
         return
+    }
+
+    @objc func getGoogleData(_ call: CAPPluginCall) {
+        call.resolve(["displayName": self.savedGoogleDisplayName, "email": self.savedGoogleEmail])
+        return
+    }
+
+    @objc public func setGoogleUserData(_ displayName: String, _ email: String) {
+        print("[Native] setGoogleUserData in plugin")
+        self.savedGoogleDisplayName = displayName
+        self.savedGoogleEmail = email
     }
 
     @objc public func setFCMToken(_ token: String) {

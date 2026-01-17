@@ -15,9 +15,11 @@ npx cap sync
 
 * [`echo(...)`](#echo)
 * [`logout()`](#logout)
+* [`signupWithGoogle()`](#signupwithgoogle)
 * [`waitlistAfterInit()`](#waitlistafterinit)
 * [`openHelpModal()`](#openhelpmodal)
 * [`getDeviceId()`](#getdeviceid)
+* [`getGoogleData()`](#getgoogledata)
 * [`getFCMToken(...)`](#getfcmtoken)
 
 </docgen-index>
@@ -49,6 +51,15 @@ logout() => Promise<void>
 --------------------
 
 
+### signupWithGoogle()
+
+```typescript
+signupWithGoogle() => Promise<void>
+```
+
+--------------------
+
+
 ### waitlistAfterInit()
 
 ```typescript
@@ -74,6 +85,17 @@ getDeviceId() => Promise<{ value: string; }>
 ```
 
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+
+--------------------
+
+
+### getGoogleData()
+
+```typescript
+getGoogleData() => Promise<{ displayName: string; email: string; }>
+```
+
+**Returns:** <code>Promise&lt;{ displayName: string; email: string; }&gt;</code>
 
 --------------------
 
