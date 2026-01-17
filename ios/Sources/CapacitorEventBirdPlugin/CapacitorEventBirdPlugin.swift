@@ -19,6 +19,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
 
     private var pendingEchoCalls: [CAPPluginCall] = []
     private var pendingFCMCalls: [CAPPluginCall] = []
+    private var pendingGoogleCalls: [CAPPluginCall] = []
 
     private var savedToken: String?
     private var savedFCMToken: String?
@@ -54,14 +55,24 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func getGoogleData(_ call: CAPPluginCall) {
-        call.resolve(["displayName": self.savedGoogleDisplayName, "email": self.savedGoogleEmail])
-        return
+        if self.savedGoogleDisplayName != nil && self.savedGoogleEmail != nil  {
+            print("[Native] JS called getGoogleData, passing the data.")
+            call.resolve(["displayName": self.savedGoogleDisplayName, "email": self.savedGoogleEmail])
+        } else {
+            print("[Native] JS called getGoogleData, but data not ready. Queuing callback.")
+            pendingGoogleCalls.append(call)
+        }
     }
 
     @objc public func setGoogleUserData(_ displayName: String, _ email: String) {
         print("[Native] setGoogleUserData in plugin")
         self.savedGoogleDisplayName = displayName
         self.savedGoogleEmail = email
+
+        for call in pendingGoogleCalls {
+            call.resolve(["displayName": self.savedGoogleDisplayName, "email": self.savedGoogleEmail])
+        }
+        pendingGoogleCalls.removeAll()
     }
 
     @objc public func setFCMToken(_ token: String) {
