@@ -92,10 +92,10 @@ getDeviceId() => Promise<{ value: string; }>
 ### getGoogleData()
 
 ```typescript
-getGoogleData() => Promise<{ displayName: string; email: string; }>
+getGoogleData() => Promise<{ displayName: string; email: string; firebaseToken: string; }>
 ```
 
-**Returns:** <code>Promise&lt;{ displayName: string; email: string; }&gt;</code>
+**Returns:** <code>Promise&lt;{ displayName: string; email: string; firebaseToken: string; }&gt;</code>
 
 --------------------
 
