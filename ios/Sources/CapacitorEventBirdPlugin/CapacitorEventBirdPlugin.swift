@@ -26,6 +26,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
 
     private var savedGoogleDisplayName: String?
     private var savedGoogleEmail: String?
+    private var savedFirebaseToken: String?
 
     private let implementation = CapacitorEventBird()
 
@@ -57,20 +58,21 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     @objc func getGoogleData(_ call: CAPPluginCall) {
         if self.savedGoogleDisplayName != nil && self.savedGoogleEmail != nil  {
             print("[Native] JS called getGoogleData, passing the data.")
-            call.resolve(["displayName": self.savedGoogleDisplayName, "email": self.savedGoogleEmail])
+            call.resolve(["displayName": self.savedGoogleDisplayName, "email": self.savedGoogleEmail, "firebaseToken": self.savedFirebaseToken])
         } else {
             print("[Native] JS called getGoogleData, but data not ready. Queuing callback.")
             pendingGoogleCalls.append(call)
         }
     }
 
-    @objc public func setGoogleUserData(_ displayName: String, _ email: String) {
+    @objc public func setGoogleUserData(_ displayName: String, _ email: String, _ token: String) {
         print("[Native] setGoogleUserData in plugin")
         self.savedGoogleDisplayName = displayName
         self.savedGoogleEmail = email
+        self.savedFirebaseToken = token
 
         for call in pendingGoogleCalls {
-            call.resolve(["displayName": self.savedGoogleDisplayName, "email": self.savedGoogleEmail])
+            call.resolve(["displayName": self.savedGoogleDisplayName, "email": self.savedGoogleEmail, "firebaseToken": self.savedFirebaseToken])
         }
         pendingGoogleCalls.removeAll()
     }

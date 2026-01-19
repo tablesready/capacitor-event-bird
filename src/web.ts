@@ -33,10 +33,11 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
     return { value: 'ios device id is not needed for web' };
   }
 
-  async getGoogleData(): Promise<{ displayName: string; email: string }> {
+  async getGoogleData(): Promise<{ displayName: string; email: string; firebaseToken: string }> {
     return {
       displayName: '',
       email: '',
+      firebaseToken: '',
     };
   }
 }
