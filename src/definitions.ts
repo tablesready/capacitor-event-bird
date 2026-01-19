@@ -5,6 +5,6 @@ export interface CapacitorEventBirdPlugin {
   waitlistAfterInit(): Promise<void>;
   openHelpModal(): Promise<void>;
   getDeviceId(): Promise<{ value: string }>;
-  getGoogleData(): Promise<{ displayName: string; email: string }>;
+  getGoogleData(): Promise<{ displayName: string; email: string, firebaseToken: string }>;
   getFCMToken(options: { value: string }): Promise<{ value: string }>;
 }
