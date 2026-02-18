@@ -12,12 +12,31 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "openHelpModal", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "getDeviceId", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "signupWithGoogle", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "saveCredentials", returnType: CAPPluginReturnPromise),
     ]
 
     private var pendingFCMCalls: [CAPPluginCall] = []
     private var pendingGoogleCalls: [CAPPluginCall] = []
+    private var pendingSaveCredentialsCall: [CAPPluginCall] = []
 
     private var savedFCMToken: String?
+
+    @objc func saveCredentials(_ call: CAPPluginCall) {
+        let username = call.getString("username") ?? ""
+        let password = call.getString("password") ?? ""
+
+        NotificationCenter.default.post(name: Notification.Name("SaveCredentials"), object: ["username": username, "password": password])
+        pendingSaveCredentialsCall.append(call)
+    }
+
+    @objc public func saveCredentialsResult(_ isSuccess: Bool) {
+        print("[Native] saveCredentialsResult()")
+
+        for call in pendingSaveCredentialsCall {
+            call.resolve(["isSuccess": isSuccess])
+        }
+        pendingSaveCredentialsCall.removeAll()
+    }
 
     @objc func getFCMToken(_ call: CAPPluginCall) {
         if let token = savedFCMToken {

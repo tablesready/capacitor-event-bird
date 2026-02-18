@@ -18,6 +18,7 @@ npx cap sync
 * [`openHelpModal()`](#openhelpmodal)
 * [`getDeviceId()`](#getdeviceid)
 * [`getFCMToken(...)`](#getfcmtoken)
+* [`saveCredentials(...)`](#savecredentials)
 
 </docgen-index>
 
@@ -75,6 +76,21 @@ getFCMToken(options: { value: string; }) => Promise<{ value: string; }>
 | **`options`** | <code>{ value: string; }</code> |
 
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+
+--------------------
+
+
+### saveCredentials(...)
+
+```typescript
+saveCredentials(options: { username: string; password: string; }) => Promise<{ isSuccess: boolean; }>
+```
+
+| Param         | Type                                                 |
+| ------------- | ---------------------------------------------------- |
+| **`options`** | <code>{ username: string; password: string; }</code> |
+
+**Returns:** <code>Promise&lt;{ isSuccess: boolean; }&gt;</code>
 
 --------------------
 

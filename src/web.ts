@@ -3,12 +3,16 @@ import { WebPlugin } from '@capacitor/core';
 import type { CapacitorEventBirdPlugin } from './definitions';
 
 export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBirdPlugin {
+  saveCredentials(_: { username: string; password: string }): Promise<{ isSuccess: boolean }> {
+    throw new Error('Method not implemented.');
+  }
+
   async getFCMToken(options: { value: string }): Promise<{ value: string }> {
     console.log('getFCMToken', options);
     return options;
   }
 
-  async signupWithGoogle(): Promise<{ displayName: string; email: string, firebaseToken: string }> {
+  async signupWithGoogle(): Promise<{ displayName: string; email: string; firebaseToken: string }> {
     console.log('signupWithGoogle in web isnt really needed it already works');
     return {
       displayName: '',
