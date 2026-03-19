@@ -75,6 +75,8 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
             call.resolve(["value": token])
         }
         pendingFCMCalls.removeAll()
+
+        notifyListeners("fcmTokenRefreshed", data: ["token": token])
     }
 
     @objc func openHelpModal(_ call: CAPPluginCall) {
