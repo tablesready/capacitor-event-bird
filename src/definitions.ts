@@ -1,3 +1,5 @@
+import { PluginListenerHandle } from '@capacitor/core';
+
 export interface CapacitorEventBirdPlugin {
   echo(options: { value: string }): Promise<{ value: string }>;
   logout(): Promise<void>;
@@ -5,6 +7,10 @@ export interface CapacitorEventBirdPlugin {
   waitlistAfterInit(): Promise<void>;
   openHelpModal(): Promise<void>;
   getDeviceId(): Promise<{ value: string }>;
-  getGoogleData(): Promise<{ displayName: string; email: string, firebaseToken: string }>;
+  getGoogleData(): Promise<{ displayName: string; email: string; firebaseToken: string }>;
   getFCMToken(options: { value: string }): Promise<{ value: string }>;
+  addListener(
+    eventName: 'fcmTokenRefreshed',
+    listenerFunc: (data: { token: string }) => void,
+  ): Promise<PluginListenerHandle>;
 }
