@@ -74,8 +74,8 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         for call in pendingFCMCalls {
             call.resolve(["value": token])
         }
-        pendingFCMCalls.removeAll()
 
+        pendingFCMCalls.removeAll()
         notifyListeners("fcmTokenRefreshed", data: ["token": token])
     }
 
