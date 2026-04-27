@@ -3,9 +3,8 @@ import { WebPlugin } from '@capacitor/core';
 import type { CapacitorEventBirdPlugin } from './definitions';
 
 export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBirdPlugin {
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
+  saveCredentials(_: { username: string; password: string }): Promise<{ isSuccess: boolean }> {
+    throw new Error('Method not implemented.');
   }
 
   async getFCMToken(options: { value: string }): Promise<{ value: string }> {
@@ -13,12 +12,13 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
     return options;
   }
 
-  async logout(): Promise<void> {
-    console.log('logout in web isnt really needed it already works');
-  }
-
-  async signupWithGoogle(): Promise<void> {
+  async signupWithGoogle(): Promise<{ displayName: string; email: string; firebaseToken: string }> {
     console.log('signupWithGoogle in web isnt really needed it already works');
+    return {
+      displayName: '',
+      email: '',
+      firebaseToken: '',
+    };
   }
 
   async openHelpModal(): Promise<void> {
@@ -31,13 +31,5 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
 
   async getDeviceId(): Promise<{ value: string }> {
     return { value: 'ios device id is not needed for web' };
-  }
-
-  async getGoogleData(): Promise<{ displayName: string; email: string; firebaseToken: string }> {
-    return {
-      displayName: '',
-      email: '',
-      firebaseToken: '',
-    };
   }
 }
