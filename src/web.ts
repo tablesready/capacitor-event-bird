@@ -12,6 +12,10 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
     return options;
   }
 
+  async getFontScale(): Promise<{ scale: number; category: string }> {
+    return { scale: 1, category: 'L' };
+  }
+
   async signupWithGoogle(): Promise<{ displayName: string; email: string; firebaseToken: string }> {
     console.log('signupWithGoogle in web isnt really needed it already works');
     return {

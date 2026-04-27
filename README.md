@@ -19,6 +19,10 @@ npx cap sync
 * [`getDeviceId()`](#getdeviceid)
 * [`getFCMToken(...)`](#getfcmtoken)
 * [`saveCredentials(...)`](#savecredentials)
+* [`getFontScale()`](#getfontscale)
+* [`addListener('fcmTokenRefreshed', ...)`](#addlistenerfcmtokenrefreshed-)
+* [`addListener('fontScaleChanged', ...)`](#addlistenerfontscalechanged-)
+* [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -93,5 +97,58 @@ saveCredentials(options: { username: string; password: string; }) => Promise<{ i
 **Returns:** <code>Promise&lt;{ isSuccess: boolean; }&gt;</code>
 
 --------------------
+
+
+### getFontScale()
+
+```typescript
+getFontScale() => Promise<{ scale: number; category: string; }>
+```
+
+**Returns:** <code>Promise&lt;{ scale: number; category: string; }&gt;</code>
+
+--------------------
+
+
+### addListener('fcmTokenRefreshed', ...)
+
+```typescript
+addListener(eventName: 'fcmTokenRefreshed', listenerFunc: (data: { token: string; }) => void) => Promise<PluginListenerHandle>
+```
+
+| Param              | Type                                               |
+| ------------------ | -------------------------------------------------- |
+| **`eventName`**    | <code>'fcmTokenRefreshed'</code>                   |
+| **`listenerFunc`** | <code>(data: { token: string; }) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
+
+--------------------
+
+
+### addListener('fontScaleChanged', ...)
+
+```typescript
+addListener(eventName: 'fontScaleChanged', listenerFunc: (data: { scale: number; category: string; }) => void) => Promise<PluginListenerHandle>
+```
+
+| Param              | Type                                                                 |
+| ------------------ | -------------------------------------------------------------------- |
+| **`eventName`**    | <code>'fontScaleChanged'</code>                                      |
+| **`listenerFunc`** | <code>(data: { scale: number; category: string; }) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
+
+--------------------
+
+
+### Interfaces
+
+
+#### PluginListenerHandle
+
+| Prop         | Type                                      |
+| ------------ | ----------------------------------------- |
+| **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
 
 </docgen-api>

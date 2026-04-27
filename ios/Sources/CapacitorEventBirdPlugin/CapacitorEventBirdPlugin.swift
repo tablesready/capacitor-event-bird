@@ -88,4 +88,28 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         NotificationCenter.default.post(name: Notification.Name("WaitlistAfterInit"), object: nil)
         call.resolve()
     }
+
+    @objc func getFontScale(_ call: CAPPluginCall) {
+        call.resolve(currentFontScalePayload())
+    }
+
+    @objc private func contentSizeCategoryDidChange() {
+        notifyListeners("fontScaleChanged", data: currentFontScalePayload())
+    }
+
+    private func currentFontScalePayload() -> [String: Any] {
+        let category = UIApplication.shared.preferredContentSizeCategory
+        return [
+            "scale": Self.scale(for: category),
+            "category": category.rawValue,
+        ]
+    }
+
+    private static func scale(for category: UIContentSizeCategory) -> Double {
+        let traits = UITraitCollection(preferredContentSizeCategory: category)
+        let baseSize: CGFloat = 17
+        let scaledSize = UIFontMetrics(forTextStyle: .body)
+        .scaledValue(for: baseSize, compatibleWith: traits)
+        return Double(scaledSize / baseSize)
+    }
 }
