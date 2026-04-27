@@ -1,5 +1,6 @@
 import Foundation
 import Capacitor
+import UIKit
 
 @objc(CapacitorEventBirdPlugin)
 public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
@@ -13,7 +14,21 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "getDeviceId", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "signupWithGoogle", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "saveCredentials", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getFontScale", returnType: CAPPluginReturnPromise),
     ]
+
+    override public func load() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(contentSizeCategoryDidChange),
+            name: UIContentSizeCategory.didChangeNotification,
+            object: nil
+        )
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     private var pendingFCMCalls: [CAPPluginCall] = []
     private var pendingGoogleCalls: [CAPPluginCall] = []
