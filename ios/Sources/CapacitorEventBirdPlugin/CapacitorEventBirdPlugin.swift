@@ -15,6 +15,7 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "signupWithGoogle", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "saveCredentials", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "getFontScale", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getAppStoreCountry", returnType: CAPPluginReturnPromise),
     ]
 
     override public func load() {
@@ -35,6 +36,14 @@ public class CapacitorEventBirdPlugin: CAPPlugin, CAPBridgedPlugin {
     private var pendingSaveCredentialsCall: [CAPPluginCall] = []
 
     private var savedFCMToken: String?
+
+    private let storeCountry = StoreCountry()
+
+    @objc func getAppStoreCountry(_ call: CAPPluginCall) {
+        storeCountry.getCountryCode { country in
+            call.resolve(["country": country])
+        }
+    }
 
     @objc func saveCredentials(_ call: CAPPluginCall) {
         let username = call.getString("username") ?? ""

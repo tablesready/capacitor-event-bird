@@ -20,6 +20,7 @@ npx cap sync
 * [`getFCMToken(...)`](#getfcmtoken)
 * [`saveCredentials(...)`](#savecredentials)
 * [`getFontScale()`](#getfontscale)
+* [`getAppStoreCountry()`](#getappstorecountry)
 * [`addListener('fcmTokenRefreshed', ...)`](#addlistenerfcmtokenrefreshed-)
 * [`addListener('fontScaleChanged', ...)`](#addlistenerfontscalechanged-)
 * [Interfaces](#interfaces)
@@ -106,6 +107,19 @@ getFontScale() => Promise<{ scale: number; category: string; }>
 ```
 
 **Returns:** <code>Promise&lt;{ scale: number; category: string; }&gt;</code>
+
+--------------------
+
+
+### getAppStoreCountry()
+
+```typescript
+getAppStoreCountry() => Promise<{ country: string; }>
+```
+
+App Store storefront country code, or 'NIL' when it can't be determined.
+
+**Returns:** <code>Promise&lt;{ country: string; }&gt;</code>
 
 --------------------
 

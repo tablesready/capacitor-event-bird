@@ -16,6 +16,10 @@ export class CapacitorEventBirdWeb extends WebPlugin implements CapacitorEventBi
     return { scale: 1, category: 'L' };
   }
 
+  async getAppStoreCountry(): Promise<{ country: string }> {
+    return { country: 'NIL' };
+  }
+
   async signupWithGoogle(): Promise<{ displayName: string; email: string; firebaseToken: string }> {
     console.log('signupWithGoogle in web isnt really needed it already works');
     return {
